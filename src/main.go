@@ -1,15 +1,16 @@
-
 package main
 
 import (
+	"emergency_call_rest_api/src/data/api"
 	"fmt"
 	"github.com/gorilla/mux"
-	"emergency_call_rest_api/src/data/api"
+	"log"
+	"net/http"
 )
 
 func main() {
 	// Listen through specific port
-	var port string = "8080"
+	var port = "8080"
 	router := mux.NewRouter()
 
 	apiRouter := router.PathPrefix("/api/").Subrouter()
@@ -17,5 +18,7 @@ func main() {
 	apiRouter.HandleFunc("/location/{id}", api.GetLocation).Methods("GET")
 
 	fmt.Printf("Server running at port %s", port)
-	http.ListenAndServe(":" + port, router)
+
+	// Wraps in Log to handle error if happen
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
