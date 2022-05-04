@@ -1,21 +1,24 @@
 package api
 
 import (
+	"emergency_call_rest_api/src/data/helper"
 	"emergency_call_rest_api/src/data/models"
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/mux"
 	"log"
 	"net/http"
 )
 
 type Data struct {
-	Success bool            `json: "success"`
-	Data    models.Location `json: "data"`
+	Success bool            `json:"success"`
+	Data    models.Location `json:"data"`
 	Errors  []string        `json:"errors"`
 }
 
 func CreateLocation(w http.ResponseWriter, req *http.Request) {
-	/*location, success := helper.DecodeBody(req)
+	fmt.Printf("Server running at port")
+	location, success := helper.DecodeBody(req)
 	if success != true {
 		http.Error(w, "Could not decode body", http.StatusBadRequest)
 		return
@@ -39,16 +42,14 @@ func CreateLocation(w http.ResponseWriter, req *http.Request) {
 
 	if success != true {
 		data.Errors = append(data.Errors, "Could not create location")
-
 	}
 
 	data.Success = true
-	data.Data = append(data.Data, location)
 
 	json, _ := json.Marshal(data)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write(json)*/
+	w.Write(json)
 }
 
 func GetLocation(w http.ResponseWriter, req *http.Request) {
@@ -74,6 +75,6 @@ func GetLocation(w http.ResponseWriter, req *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	log.Fatal(json.NewEncoder(w).Encode(data))
+	var response = json.NewEncoder(w).Encode(data)
+	log.Printf("result: %s", response)
 }
-   
